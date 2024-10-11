@@ -54,13 +54,16 @@ async function run() {
       const user = req.body;
       const filter = { _id: new ObjectId(id) };
       const option = { upsert: true };
-
+      console.log({ user });
       const updatedUser = {
         $set: {
-          name: user.name,
+          displayName: user.displayName,
           email: user.email,
           phone: user.phone,
+          photoUrl: user.photoUrl,
           address: user.address,
+          isAdmin: user.isAdmin,
+          isBlocked: user.isBlocked,
         },
       };
 
