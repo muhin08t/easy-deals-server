@@ -120,7 +120,7 @@ async function run() {
       res.send(message);
     });
 
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("Connected to MongoDB!");
   } finally {
     // await client.close(); // Commented out for persistent connection
