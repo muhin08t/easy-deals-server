@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_SECRET}@cluster0.it45qfo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_SECRET}@cluster0.vtojw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -24,7 +24,7 @@ async function run() {
   try {
     await client.connect();
 
-    const userCollection = client.db("totTheMasterDB").collection("users");
+    const userCollection = client.db("easy-deals").collection("users");
 
     // Fetch all users
     app.get("/users", async (req, res) => {
@@ -129,9 +129,9 @@ async function run() {
 run().catch(console.error);
 
 app.get("/", (req, res) => {
-  res.send("Server is running!");
+  res.send("Eeasy deals Server is running!");
 });
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Easy deals Server running on port ${port}`);
 });
