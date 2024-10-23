@@ -33,11 +33,48 @@ async function run() {
       res.send(result);
     });
 
+    // Fetch all Categories
+    const categoryCollection = client.db("easy-deals").collection("categories");
+    app.get("/categories", async (req, res) => {
+      const query = categoryCollection.find();
+      const result = await query.toArray();
+      res.send(result);
+    });
+
+    // Fetch all Products
+    const productsCollection = client.db("easy-deals").collection("products");
+    app.get("/products", async (req, res) => {
+      const query = productsCollection.find();
+      const result = await query.toArray();
+      res.send(result);
+    });
+
+    // Fetch Categorybased Products
+    const categoryBasedproductsCollection = client
+      .db("easy-deals")
+      .collection("products");
+    app.get("/category/products/:cat_id", async (req, res) => {
+      const cat_id = parseInt(req.params.cat_id); // Convert to number if necessary
+      const query = { cat_id: cat_id };
+      const result = await categoryBasedproductsCollection
+        .find(query)
+        .toArray();
+      res.send(result);
+    });
+
     // Fetch a user by Firebase uid
     app.get("/user/:uid", async (req, res) => {
       const uid = req.params.uid;
       const query = { uid: uid };
       const result = await userCollection.findOne(query);
+      res.send(result);
+    });
+
+    // Fetch a product by product id
+    app.get("/products/:product_id", async (req, res) => {
+      const product_id = parseInt(req.params.product_id);
+      const query = { product_id: product_id };
+      const result = await productsCollection.findOne(query);
       res.send(result);
     });
 
