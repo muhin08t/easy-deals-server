@@ -71,9 +71,9 @@ async function run() {
     });
 
     // Fetch a product by product id
-    app.get("/products/:product_id", async (req, res) => {
-      const product_id = parseInt(req.params.product_id);
-      const query = { product_id: product_id };
+    app.get("/products/:_id", async (req, res) => {
+      const _id = req.params._id;
+      const query = { _id: new ObjectId(_id) };
       const result = await productsCollection.findOne(query);
       res.send(result);
     });
