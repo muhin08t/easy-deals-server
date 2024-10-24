@@ -124,7 +124,7 @@ async function run() {
     app.post("/messages", async (req, res) => {
       const { title, message, email } = req.body;
       const messageCollection = client
-        .db("totTheMasterDB")
+        .db("easy-deals")
         .collection("messages");
 
       const newMessage = {
@@ -140,7 +140,7 @@ async function run() {
     // Get all messages
     app.get("/messages", async (req, res) => {
       const messageCollection = client
-        .db("totTheMasterDB")
+        .db("easy-deals")
         .collection("messages");
       const messages = await messageCollection.find().toArray();
       res.send(messages);
@@ -156,6 +156,26 @@ async function run() {
       });
       res.send(message);
     });
+
+        // Purchase products
+        app.post("/purchase", async (req, res) => {
+          const { productName, phone, quantity, comment, email } = req.body;
+          const purchaseCollection = client
+            .db("easy-deals")
+            .collection("purchase");
+    
+          const newPurchase = {
+            productName,
+            phone,
+            quantity,
+            comment,
+            email,
+            createdAt: new Date(),
+          };
+    
+          const result = await purchaseCollection.insertOne(newPurchase);
+          res.send(result);
+        });
 
     // await client.db("admin").command({ ping: 1 });
     console.log("Connected to MongoDB!");
