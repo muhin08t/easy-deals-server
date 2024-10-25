@@ -40,6 +40,12 @@ async function run() {
       const result = await query.toArray();
       res.send(result);
     });
+            // Add a new Category to the collection
+            app.post("/categories", async (req, res) => {
+              const category = req.body;
+              const result = await categoryCollection.insertOne(category);
+              res.send(result);
+            });
 
     // Fetch all Products
     const productsCollection = client.db("easy-deals").collection("products");
@@ -48,6 +54,13 @@ async function run() {
       const result = await query.toArray();
       res.send(result);
     });
+
+        // Add a new Proudct to the collection
+        app.post("/products", async (req, res) => {
+          const product = req.body;
+          const result = await productsCollection.insertOne(product);
+          res.send(result);
+        });
 
     // Fetch Categorybased Products
     const categoryBasedproductsCollection = client
@@ -123,9 +136,7 @@ async function run() {
     // Create message
     app.post("/messages", async (req, res) => {
       const { title, message, email } = req.body;
-      const messageCollection = client
-        .db("easy-deals")
-        .collection("messages");
+      const messageCollection = client.db("easy-deals").collection("messages");
 
       const newMessage = {
         title,
@@ -139,9 +150,7 @@ async function run() {
     });
     // Get all messages
     app.get("/messages", async (req, res) => {
-      const messageCollection = client
-        .db("easy-deals")
-        .collection("messages");
+      const messageCollection = client.db("easy-deals").collection("messages");
       const messages = await messageCollection.find().toArray();
       res.send(messages);
     });
@@ -157,25 +166,37 @@ async function run() {
       res.send(message);
     });
 
-        // Purchase products
-        app.post("/purchase", async (req, res) => {
-          const { productName, phone, quantity, comment, email } = req.body;
-          const purchaseCollection = client
-            .db("easy-deals")
-            .collection("purchase");
-    
-          const newPurchase = {
-            productName,
-            phone,
-            quantity,
-            comment,
-            email,
-            createdAt: new Date(),
-          };
-    
-          const result = await purchaseCollection.insertOne(newPurchase);
-          res.send(result);
-        });
+    // Purchase products
+    app.post("/purchase", async (req, res) => {
+      const { productName, price, phone, quantity, comment, email, customerId } =
+        req.body;
+      const purchaseCollection = client.db("easy-deals").collection("purchase");
+
+      const newPurchase = {
+        productName,
+        price,
+        phone,
+        quantity,
+        comment,
+        email,
+        customerId,
+        createdAt: new Date(),
+      };
+
+      const result = await purchaseCollection.insertOne(newPurchase);
+      res.send(result);
+    });
+
+    // Fetch Purchased Products
+    const userdproductsCollection = client
+      .db("easy-deals")
+      .collection("purchase");
+    app.get("/purchase_products/:customerId", async (req, res) => {
+      const customerId = req.params.customerId; // Convert to number if necessary
+      const query = { customerId: customerId };
+      const result = await userdproductsCollection.find(query).toArray();
+      res.send(result);
+    });
 
     // await client.db("admin").command({ ping: 1 });
     console.log("Connected to MongoDB!");
