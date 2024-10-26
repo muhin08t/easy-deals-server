@@ -1,5 +1,5 @@
-## Client side code link: https://github.com/devalienbrain/the-master-full-stack-project-client
-## Live deploy (vercel) link: https://the-master-full-stack-project-server.vercel.app/
+## Client side deploy(netlify) link: https://easy-deals-client.netlify.app/ 
+## Live deploy (Render) link: https://easy-deals-server.onrender.com/
 
 # User Management Dashboard
 
@@ -14,8 +14,6 @@ This is a full-stack user management dashboard where users can register, log in,
   - **Admin Dashboard**: Admin users can view all registered users, change their roles (Admin/User), block/unblock users, and monitor system activity.
   - **User Dashboard**: Regular users can view and update their profile details (except email, role, and block status).
 - **Super Admin**: 
-  - Email: `super-admin@dev-master.com`
-  - Password: `admin123`
   - The Super Admin role is fixed and cannot be changed. The Super Admin is always active.
 - **Blocked Users**: Blocked users will only see their profile page and the option to log out. They cannot access other features or update their profile details.
 
@@ -52,9 +50,6 @@ This is a full-stack user management dashboard where users can register, log in,
 ## Admin Credentials
 
 To log in as the Super Admin, use the following credentials:
-
-- Email: `super-admin@dev-master.com`
-- Password: `admin123`
 
 ## Installation & Setup
 
