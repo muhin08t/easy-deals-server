@@ -62,6 +62,40 @@ async function run() {
           res.send(result);
         });
 
+            // Delete product by id
+    app.delete("/product/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productsCollection.deleteOne(query);
+      res.send(result);
+    });
+
+        // Update product by id
+        app.put("/product/:id", async (req, res) => {
+          const id = req.params.id;
+          const product = req.body;
+          const filter = { _id: new ObjectId(id) };
+          const option = { upsert: true };
+          console.log({ product : product });
+          const updatedProduct = {
+            $set: {
+              name: product.name,
+              cat_id: product.cat_id,
+              product_id: product.product_id,
+              price: product.price,
+              image: product.image,
+              rating: product.rating,
+            },
+          };
+    
+          const result = await productsCollection.updateOne(
+            filter,
+            updatedProduct,
+            option
+          );
+          res.send(result);
+        });
+
     // Fetch Categorybased Products
     const categoryBasedproductsCollection = client
       .db("easy-deals")
